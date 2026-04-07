@@ -69,6 +69,10 @@ import {
   RematchRecommendation, 
   LeaderboardEntry 
 } from './services/aiService';
+// ============================================
+// BADILIKO #1: ONGEZA IMPORT YA SUPABASE
+// ============================================
+import { supabase } from './lib/supabaseClient';
 
 // --- Types ---
 
@@ -740,6 +744,12 @@ export default function App() {
   const [toasts, setToasts] = useState<{ id: string; text: string }[]>([]);
   const [energyMilestoneBurst, setEnergyMilestoneBurst] = useState(false);
 
+  // ============================================
+  // BADILIKO #2: ONGEZA STATE HIZI MBILI
+  // ============================================
+  const [supabaseUsers, setSupabaseUsers] = useState<any[]>([]);
+  const [supabaseLeaderboard, setSupabaseLeaderboard] = useState<any[]>([]);
+
   const addToast = (text: string) => {
     const id = generateId();
     setToasts(prev => [...prev, { id, text }]);
@@ -778,6 +788,23 @@ export default function App() {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // ============================================
+  // BADILIKO #3: ONGEZA USEFFECT HUU
+  // ============================================
+  useEffect(() => {
+    const loadSupabaseData = async () => {
+      try {
+        const { data: users } = await supabase.from('users').select('*');
+        if (users) setSupabaseUsers(users);
+        const { data: leaderboard } = await supabase.from('leaderboard').select('*').limit(5);
+        if (leaderboard) setSupabaseLeaderboard(leaderboard);
+      } catch (err) {
+        console.error('Supabase error:', err);
+      }
+    };
+    loadSupabaseData();
+  }, []);
 
   const startPKWithChallenger = (challenger: any) => {
     if (activeGuests.length > 0) {
@@ -1106,6 +1133,17 @@ export default function App() {
       }
       return [...prev, giftMsg];
     });
+
+    // ============================================
+    // BADILIKO #4: ONGEZA MSTARI HUU MWISHONI MWA sendGift
+    // ============================================
+    supabase.from('gifts').insert({
+      sender_name: userName,
+      receiver_name: targetGuest?.name || 'Pepelle',
+      gift_name: gift.name,
+      gift_emoji: gift.emoji,
+      coins: gift.price
+    }).catch(console.error);
 
     // Reset combo after delay
     if (comboTimeoutRef.current) clearTimeout(comboTimeoutRef.current);
