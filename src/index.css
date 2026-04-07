@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --animate-spin-slow: spin 8s linear infinite;
+  --animate-bounce-slow: bounce 3s infinite;
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  @keyframes shine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .animate-shine {
+    animation: shine 3s linear infinite;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .glass {
+    @apply bg-white/10 backdrop-blur-xl border border-white/10;
+  }
+  .glass-dark {
+    @apply bg-black/20 backdrop-blur-xl border border-white/10;
+  }
+  .neon-pink {
+    @apply border-pink-500 shadow-[0_0_15px_rgba(236,72,153,0.5)];
+  }
+  .neon-blue {
+    @apply border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)];
+  }
+  .text-shadow-neon {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+
+  .fullscreen-layout {
+    @apply relative w-full h-full;
+  }
+
+  .grid-layout {
+    @apply relative w-full h-full;
+  }
+
+  .guest-cell {
+    @apply transition-all duration-300;
+  }
+
+  .pinned-class {
+    @apply border-amber-400 shadow-[0_0_15px_rgba(251,191,36,0.3)];
+  }
+
+  .host-class {
+    @apply border-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.3)];
+  }
+
+  /* New High-Retention UI Classes */
+  .status-glow-legend { @apply shadow-[0_0_20px_rgba(251,191,36,0.6)] border-amber-400; }
+  .status-glow-icon { @apply shadow-[0_0_20px_rgba(168,85,247,0.6)] border-purple-400; }
+  .status-glow-star { @apply shadow-[0_0_15px_rgba(59,130,246,0.6)] border-blue-400; }
+  
+  .energy-milestone-burst {
+    animation: energy-burst 1s ease-out forwards;
+  }
+
+  @keyframes energy-burst {
+    0% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.1); filter: brightness(2) saturate(2); }
+    100% { transform: scale(1); filter: brightness(1); }
+  }
+
+  .badge-3d-rotate {
+    animation: badge-rotate 3s linear infinite;
+    transform-style: preserve-3d;
+  }
+
+  @keyframes badge-rotate {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+  }
+
+  .fomo-glow {
+    animation: fomo-pulse 2s infinite;
+  }
+
+  @keyframes fomo-pulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(244,63,94,0.3); }
+    50% { box-shadow: 0 0 20px rgba(244,63,94,0.6); }
+  }
+
+  .chat-highlight {
+    @apply border-l-2 border-amber-500;
+  }
+
+  .guest-sidebar {
+    @apply flex flex-col gap-2 overflow-y-auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .guest-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+body {
+  @apply bg-black overflow-hidden;
+  font-family: var(--font-sans);
+}

@@ -1,0 +1,8 @@
+{
+  "name": "5Remix: Remix: Remix: skyLive",
+  "description": "A premium, high-fidelity mobile live streaming UI with immersive glassmorphism and neon aesthetics.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
